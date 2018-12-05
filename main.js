@@ -10,13 +10,15 @@ $(function () {
 });
 
 $(document).ready(function () {
-  function isNumber(event) {
-    if ($.isNumeric(event)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+var date_input=$('input[name="date"]'); //our date input has the name "date"
+        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+  
   var i = 1;
 
   $('#add').click(function () {
@@ -25,7 +27,7 @@ $(document).ready(function () {
       return false;
     }
     // $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="text" name="sector_no" id="sector_no" size="1" style="border: 1px solid red;margin:0!important"></td><td><input type="text" name="coupon_no" id="coupon_no" size="1" style="border: 1px solid red;margin:0!important"></td><td><input type="text" name="from" id="from" size="7" style="border: 1px solid red;margin:0!important"></td><td><input type="text" name="to" id="to" size="7" style="border: 1px solid red;margin:0!important"></td><td><input type="text" name="cxr" id="cxr" size="4" style="border: 1px solid red;margin:0!important"></td><td><input type="text" name="fb" id="fb" size="10" style="border: 1px solid red;margin:0!important"></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-sm btn-danger btn_remove">-</button></td></tr>');
-    $('#dynamic_field').append('<tr id="row' + i + '" class="dynamic-added"><td><input type="text" name="docNo" id="docNo" required  maxlength="10" size="6"></td><td><input type="text" name="couponNo" id="couponNo" required maxlength="1" size="1"></td><td><input type="text" name="origin" id="origin" maxlength="3" size="5"></td><td><input type="text" name="destination" id="destination" maxlength="3" size="3"></td><td><input type="text" name="cxr" id="cxr" maxlength="2" size="1"></td><td><input type="text" name="fareBasis" id="fareBasis" size="7"></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-sm btn-danger btn_remove"><b>-</b></button></td></tr>');
+    $('#dynamic_field').append('<tr id="row' + i + '" class="dynamic-added"><td><input type="text" name="docNo" id="docNo" required  maxlength="10" size="6"></td><td><input type="text" name="couponNo" id="couponNo" required maxlength="1" size="1"></td><td><input type="text" name="origin" id="origin" maxlength="3" size="3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="text-uppercase"></td><td><input type="text" name="destination" id="destination" maxlength="3" size="3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="text-uppercase"></td><td><input type="text" name="cxr" id="cxr" maxlength="2" size="1" onkeypress="return (event.charCode==45) || (event.charCode > 46 && event.charCode < 58) || (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="text-uppercase"></td><td><input type="text" name="fareBasis" id="fareBasis" size="7" class="text-uppercase"></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-sm btn-danger btn_remove"><b>-</b></button></td></tr>');
     i++;
   });
 
@@ -54,11 +56,12 @@ $(document).ready(function () {
       var origin = table.rows[r].cells[2].children[0].value;
       var destination = table.rows[r].cells[3].children[0].value;
       var cxr = table.rows[r].cells[4].children[0].value;
-      if (fareBasis == "") {
-        var fareBasis = null;
-      } else {
-        var fareBasis = table.rows[r].cells[5].children[0].value;
-      }
+      var fareBasis = table.rows[r].cells[5].children[0].value;
+      // if (fareBasis == "") {
+      //   var fareBasis = null;
+      // } else {
+      //   var fareBasis = table.rows[r].cells[5].children[0].value;
+      // }
 
       var obj = {};
       //validation
@@ -85,23 +88,26 @@ $(document).ready(function () {
       obj["origin"] = origin.toUpperCase();
       obj["destination"] = destination.toUpperCase();
       obj["cxr"] = cxr.toUpperCase();
-      obj["fareBasis"] = fareBasis;
+      obj["fareBasis"] = fareBasis.toUpperCase();
       obj["docNo"] = docNo;
       obj["couponNo"] = cpnNo;
       listOfCoupons.push(obj);
+
     }
     dataToSend["gfp"] = gfp;
     gfp["listOfCoupons"] = listOfCoupons;
     dataToSend["ticketIndicator"] = ticketIndicator;
-    dataToSend["fareString"] = fareString;
+    dataToSend["fareString"] = fareString.toUpperCase();
     console.log("Data before submit:",JSON.stringify(dataToSend));
-
+    $("input[name='submit']").attr("disabled", true).val("Please wait...").addClass("submit-backg");
+    // $("input[name='submit']").attr("disabled", true).val("Please wait...").AddClass('important');
     //process the form
     $.ajax({
       type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
       // url: 'http://10.245.240.102:8060/smartpra/proration/fca/enrichgfp', // the url where we want to POST
+      url: 'http://10.245.240.45:8060/smartpra/proration/fca/enrichgfp', // the url where we want to POST
       // url: 'http://10.245.240.102:8087/proration/fca/enrichgfp', // ZUUL QA env the url where we want to POST
-      url: 'http://10.245.240.45:8087/proration/fca/enrichgfp', // ZUUL  DEV env the url where we want to POST
+      // url: 'http://10.245.240.45:8087/proration/fca/enrichgfp', // ZUUL  DEV env the url where we want to POST
       // url: 'http://10.111.25.165:8087/proration/fca/enrichgfp', // Barthiban's url.the url where we want to POST
       contentType: "application/json",
       data: JSON.stringify(dataToSend), // our data object
@@ -112,6 +118,8 @@ $(document).ready(function () {
       })
       // using the done promise callback
       .done(function (data, textStatus, xhr) {
+        $("input[name='submit']").attr("disabled", false).val("SUBMIT").removeClass("submit-backg");
+        // $("input[name='submit']").attr("disabled", false).val("SUBMIT").removeClass('submit-backg');
         // check if couponInfo and ticketLevelInfo is null. if null then display only exceptionerror message
         console.log(arguments);
 
@@ -362,6 +370,7 @@ $(document).ready(function () {
       })
 
       .fail(function (data, textStatus, xhr) {
+        $("input[name='submit']").attr("disabled", false).val("SUBMIT").removeClass("submit-backg");
         //This shows status code eg. 403
         console.log("error", data.status);
         //This shows status message eg. Forbidden
