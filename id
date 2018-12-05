@@ -16,8 +16,8 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <table class="table table-bordered"  id="dynamic_field">
-                            <!-- <div class="row">
-                            <div class=" col-md-6 mb-2">
+                            <div class="row mb-2">
+                            <div class=" col-md-6 col-lg-6">
                                     <span style="font-size: 15px;color: #495057;font-weight: 400">Ticket Type: &nbsp;</span>
                                     <div class="custom-control custom-radio custom-control-inline">
                                       <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample" value="P">
@@ -36,42 +36,28 @@
                                       <label class="custom-control-label" for="defaultInline3" style="font-size: 15px;color: #495057;font-weight: 400">Invol</label>
                                     </div>
                              </div>  
-                             <div class="col-md-6">
+                             <div class="col-md-6 col-lg-6 text-right" style="float:right">
                                 <span>Issue Date:</span>
-                                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date" style="width: auto;" />
+                                <input  id="date" name="date" placeholder="MM/DD/YYY" type="date" />
                             </div> 
-                            </div> -->
-
-
-                            <div class="mb-2">
+                            </div>
+                            <!-- <div class="mb-2">
                                     <span style="font-size: 15px;color: #495057;font-weight: 400">Ticket Type: &nbsp;</span>
-                                    <!-- <input type="radio" name="approval2" value="approve" /> Prime &nbsp;
-                                    <input type="radio" name="approval2" value="reject" /> Reissue &nbsp;
-                                    <input type="radio" name="approval2" value="reject" /> Invol  -->
-
-                                    <!-- Default inline 1-->
                                     <div class="custom-control custom-radio custom-control-inline">
                                       <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample" value="P">
                                       <label class="custom-control-label" for="defaultInline1" style="font-size: 15px;color: #495057;font-weight: 400">Prime</label>
                                     </div>
 
-                                    <!-- Default inline 2-->
                                     <div class="custom-control custom-radio custom-control-inline">
                                       <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample" value="R">
                                       <label class="custom-control-label" for="defaultInline2" style="font-size: 15px;color: #495057;font-weight: 400">Reissue</label>
                                     </div>
 
-                                    <!-- Default inline 3-->
                                     <div class="custom-control custom-radio custom-control-inline">
                                       <input type="radio" class="custom-control-input" id="defaultInline3" name="inlineDefaultRadiosExample" value="I">
                                       <label class="custom-control-label" for="defaultInline3" style="font-size: 15px;color: #495057;font-weight: 400">Invol</label>
                                     </div>
-
-                                    <div class="form-group"> <!-- Date input -->
-                                        <label class="control-label" for="date">Date</label>
-                                        <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
-                                    </div>
-                             </div>   
+                             </div>    -->
                             <thead class="thead-dark thead-backg">
                                 <tr>
                                     <th>Doc No</th>
@@ -89,19 +75,19 @@
 
                                     <td><input type="text" name="couponNo" id="couponNo" required maxlength="1" size="1"></td>
 
-                                    <td><input type="text" name="origin" id="origin" maxlength="3" size="3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" style="text-transform: uppercase;"></td>
+                                    <td><input type="text" name="origin" id="origin" maxlength="3" size="3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="text-uppercase"></td>
 
-                                    <td><input type="text" name="destination" id="destination" maxlength="3" size="3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" style="text-transform: uppercase;"></td>
+                                    <td><input type="text" name="destination" id="destination" maxlength="3" size="3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="text-uppercase"></td>
 
-                                    <td><input type="text" name="cxr" id="cxr" maxlength="2" size="1" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" style="text-transform: uppercase;"></td>
+                                    <td><input type="text" name="cxr" id="cxr" maxlength="2" size="1" onkeypress="return (event.charCode==45) || (event.charCode > 46 && event.charCode < 58) || (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="text-uppercase"></td>
 
-                                    <td><input type="text" name="fareBasis" id="fareBasis" size="7"></td>
+                                    <td><input type="text" name="fareBasis" id="fareBasis" size="7" class="text-uppercase"></td>
 
                                     <td><button type="button" name="add" id="add" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button></td>
                                 </tr>
                             </tbody>
                             <tr>
-                                <td colspan="7"><input type="text" name="fcaString" id="fcaString" placeholder="Enter FCA string" class="form-control" oninput="this.value = this.value.toUpperCase()"></td>
+                                <td colspan="7"><input type="text" name="fcaString" id="fcaString" placeholder="Enter FCA string" class="form-control text-uppercase" ></td>
                             </tr>
                             
                         </table>
@@ -130,8 +116,8 @@
                             <th id="docNo">Doc No</th>
                             <th id="cpnNo">Cpn No</th>
                             <th id="sectNo">Sect No</th>
-                            <th id="origin">Origin</th>
-                            <th id="dest">Destination</th>
+                            <th id="origin">From</th>
+                            <th id="dest">To</th>
                             <th id="airportCode">CXR</th>
                             <th id="fareBasis">Fare Basis</th>
                             <th id="fcNo">FC No</th>
@@ -179,6 +165,8 @@
     </div>
 </div>
 <script src="js/jquery-3.3.1.min.js"></script>
+<!-- Added for datepicker -->
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
